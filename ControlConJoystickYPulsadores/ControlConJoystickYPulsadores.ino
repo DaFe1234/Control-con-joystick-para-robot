@@ -1,18 +1,18 @@
 int Joystick [2] = {A0,A1};
 int LecturaDeJoystick [2];
-int BotonGuardar = 2;
+int BotonGuardar = 11;
 int LecturaBotonGuardar = 0;
-int BotonMostrar = 3;
+int BotonMostrar = 10;
 int LecturaBotonMostrar = 0;
 int Posiciones [255] [2];
 int Contador = 0;
 int LecturaBotonReiniciar = 0;
-int BotonReiniciar = 4;
+int BotonReiniciar = 12;
 void setup() {
   Serial.begin(9600);
-  pinMode(BotonGuardar,INPUT_PULLUP);
+  pinMode(BotonGuardar,INPUT);
   pinMode(BotonMostrar,INPUT_PULLUP);
-  pinMode(BotonReiniciar,INPUT);
+  pinMode(BotonReiniciar,INPUT_PULLUP);
 }
 
 void loop() {
@@ -24,7 +24,7 @@ void loop() {
      Serial.println("Reiniciando Posiciones");
      delay(100);
   }
-  if(LecturaBotonGuardar == 0){
+  if(LecturaBotonGuardar == 1){
       if(Contador == 0){
          Serial.println("Guardando Posiciones"); 
       }  
