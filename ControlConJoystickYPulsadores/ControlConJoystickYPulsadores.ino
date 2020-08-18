@@ -1,18 +1,25 @@
 int Joystick [2] = {A0,A1};
 int LecturaDeJoystick [2];
-int BotonGuardar = 11;
+int BotonGuardar = 12;
 int LecturaBotonGuardar = 0;
-int BotonMostrar = 10;
+int BotonMostrar = 13;
 int LecturaBotonMostrar = 0;
 int Posiciones [255] [2];
 int Contador = 0;
 int LecturaBotonReiniciar = 0;
-int BotonReiniciar = 12;
+int BotonReiniciar = 11;
+int LecturaBotonGuardarEEPROM = 0;
+int BotonGuardarEEPROM = 9;
+struct ObjetoPosiciones{
+  
+  int MatrizPosiciones [255] [2];
+  
+};
 void setup() {
   Serial.begin(9600);
-  pinMode(BotonGuardar,INPUT);
+  pinMode(BotonGuardar,INPUT_PULLUP);
   pinMode(BotonMostrar,INPUT_PULLUP);
-  pinMode(BotonReiniciar,INPUT_PULLUP);
+  pinMode(BotonReiniciar,INPUT);
 }
 
 void loop() {
@@ -24,7 +31,7 @@ void loop() {
      Serial.println("Reiniciando Posiciones");
      delay(100);
   }
-  if(LecturaBotonGuardar == 1){
+  if(LecturaBotonGuardar == 0){
       if(Contador == 0){
          Serial.println("Guardando Posiciones"); 
       }  
@@ -49,6 +56,7 @@ void loop() {
       Serial.println( Posiciones [i] [1]);
     }
   }
+  GuardarEnEEPROM();
 
 }
 void LeerJoystick(){
@@ -66,4 +74,16 @@ void LecturaBotones(){
   LecturaBotonMostrar = digitalRead(BotonMostrar);
   LecturaBotonGuardar = digitalRead(BotonGuardar);
   LecturaBotonReiniciar = digitalRead(BotonReiniciar);
+  LecturaBotonGuardarEEPROM = digitalRead(BotonGuardarEEPROM);
+}
+void GuardarEnEEPROM(){
+  ObjetoPosiciones MiObjeto;
+  for(int Filas = 0; Filas < 255; Filas++){
+    for(int Columnas = 0; Columnas < 2; Columnas++){
+      MiObjeto.MatrizPosiciones [Filas][Columnas] =  Posiciones [Filas] [Columnas];
+      Serial.print(MiObjeto.MatrizPosiciones [Filas][Columnas]);
+      Serial.print("  ");
+    }
+    Serial.println();
+  }
 }
