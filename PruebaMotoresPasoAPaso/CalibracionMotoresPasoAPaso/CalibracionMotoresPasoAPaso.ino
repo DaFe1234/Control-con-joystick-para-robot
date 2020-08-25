@@ -1,3 +1,4 @@
+// Para Base driver eje X STEP 5 y DIR 2 / Para Codo driver eje z STEP 7 y DIR 4 / Para Hombro eje y STEP 6 y DIR 3
 #include <Arduino.h>
 #include "BasicStepperDriver.h"
 
@@ -14,52 +15,54 @@
 // 1=full step, 2=half step etc.
 #define MICROSTEPS 2
 
-// All the wires needed for full functionality
-#define DIR 2
-#define STEP 5
+// eje X
+#define DIR_x 2
+#define STEP_x 5
+// eje Y
+#define DIR_y 3
+#define STEP_y 6
+// eje Z
+#define DIR_z 4
+#define STEP_z 7
 
-//Uncomment line to use enable/disable functionality
-//#define SLEEP 13
 
 // 2-wire basic config, microstepping is hardwired on the driver
-BasicStepperDriver stepper(MOTOR_STEPS, DIR, STEP);
+BasicStepperDriver stepper_x(MOTOR_STEPS, DIR_x, STEP_x);
+BasicStepperDriver stepper_y(MOTOR_STEPS, DIR_y, STEP_y);
+BasicStepperDriver stepper_z(MOTOR_STEPS, DIR_z, STEP_z);
 
-//Uncomment line to use enable/disable functionality
-//BasicStepperDriver stepper(MOTOR_STEPS, DIR, STEP, SLEEP);
 
 void setup() {
-    stepper.begin(RPM, MICROSTEPS);
-    // if using enable/disable on ENABLE pin (active LOW) instead of SLEEP uncomment next line
-    // stepper.setEnableActiveState(LOW);
+    stepper_x.begin(RPM, MICROSTEPS);
+    stepper_y.begin(RPM, MICROSTEPS);
+    stepper_z.begin(RPM, MICROSTEPS);
+
 }
 
 void loop() {
 
-  MoverMotores(180,16);
-    // energize coils - the motor will hold position
-    // stepper.enable();
-  
-    /*
-     * Moving motor one full revolution using the degree notation
-     */
-    //stepper.rotate(-360);
-    //stepper.move(MOTOR_STEPS*MICROSTEPS);
-    //stepper.move(2048);
-    /*
-     * Moving motor to original position using steps
-     */
-    //delay(1000);
-    //stepper.rotate(360);
-    //stepper.move(-MOTOR_STEPS*MICROSTEPS);
-    //stepper.move(-2048);
-    // pause and allow the motor to be moved by hand
-    // stepper.disable();
+  ActivarMotores(1);
+  MoverMotores(90,8);
 
-    //delay(5000);
 }
-void MoverMotores(int Grados, int Multiplicador){
-      stepper.rotate(-Grados*Multiplicador);
-      delay(1000);
-      stepper.rotate(Grados*Multiplicador);
-      delay(5000);
+void MoverMotores(int Grados, int Selector)
+  
+      if(Selector == 1){
+       Grados =  map (Grados, -100 , 100 , -180*16 , 180*16);
+       stepper_x.rotate(Grados);
+      }
+      if(Selector == 2){
+       Grados =  map (Grados, -100 , 100 , -90*10 , 90*10);
+       stepper_y.rotate(Grados);
+      }
+      if(Selector == 3){
+       Grados =  map (Grados, -100 , 100 , -90*7 , 90*7);
+       stepper_z.rotate(Grados);
+      }
+}
+void ActivarMotores(bool Activar ){
+
+   pinMode(8,OUTPUT);
+   // Simbolo ! para negar 
+   digitalWrite(8,!Activar);
 }
