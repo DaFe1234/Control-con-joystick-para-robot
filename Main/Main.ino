@@ -40,14 +40,14 @@ BasicStepperDriver stepper_z(MOTOR_STEPS, DIR_z, STEP_z);
 
 int Joystick [2] = {A0,A1};
 int LecturaDeJoystick [2];
-int BotonGuardar = 12;
+int BotonGuardar = 11;
 int LecturaBotonGuardar = 0;
-int BotonMostrar = 13;
+int BotonMostrar = 10;
 int LecturaBotonMostrar = 0;
 int Posiciones [255] [2];
 int Contador = 0;
 int LecturaBotonReiniciar = 0;
-int BotonReiniciar = 11;
+int BotonReiniciar = 12;
 
 void setup() {
   // put your setup code here, to run once:
@@ -56,9 +56,9 @@ void setup() {
     stepper_z.begin(RPM, MICROSTEPS);
 
     Serial.begin(9600);
-    pinMode(BotonGuardar,INPUT_PULLUP);
+    pinMode(BotonGuardar,INPUT);
     pinMode(BotonMostrar,INPUT_PULLUP);
-    pinMode(BotonReiniciar,INPUT);
+    pinMode(BotonReiniciar,INPUT_PULLUP);
 }
 
 void loop() {

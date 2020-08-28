@@ -1,5 +1,5 @@
 void Guardar(){
-    if(LecturaBotonGuardar == 0){
+    if(LecturaBotonGuardar == 1){
       if(Contador == 0){
          Serial.println("Guardando Posiciones"); 
       }  
