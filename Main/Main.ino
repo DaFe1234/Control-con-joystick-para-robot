@@ -40,6 +40,7 @@ BasicStepperDriver stepper_z(MOTOR_STEPS, DIR_z, STEP_z);
 // ****************************
 
 int Joystick [2] = {A0,A1};
+int Joystick2 [2] = {A6,A7};
 
 int BotonGuardarEEPROM = 9;
 int BotonMostrar = 10;
@@ -48,6 +49,7 @@ int BotonReiniciar = 12;
 int BotonLeerEEPROM = 13;
 
 int LecturaDeJoystick [2];
+int LecturaDeJoystick2[2];
 int LecturaBotonGuardarEEPROM = 0;
 int LecturaBotonMostrar = 0;
 int LecturaBotonGuardar = 0;
@@ -56,12 +58,14 @@ int LecturaBotonLeerEEPROM = 0;
 
 
 int Contador = 0;
-int Posiciones [150] [2];
+int Posiciones [50] [2];
+int Posiciones2 [50] [2];
 
 struct ObjetoPosiciones{
   
   int contadorDeDatos = 0;
   int MatrizPosiciones [5] [2];
+  int MatrizPosiciones2 [5] [2];
   
 };
 
@@ -93,7 +97,7 @@ void loop() {
   delay (10000);
   */
  // Joystick
-    LeerJoystick();
+    LeerJoysticks();
     //delay(300);
     Mostrar();
     Reiniciar();

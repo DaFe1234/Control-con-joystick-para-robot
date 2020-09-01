@@ -5,9 +5,15 @@ void Guardar(){
       }  
       Posiciones [Contador] [0] = LecturaDeJoystick [0];
       Posiciones [Contador] [1] = LecturaDeJoystick [1];
+      Posiciones2 [Contador] [0] = LecturaDeJoystick2 [0];
+      Posiciones2 [Contador] [1] = LecturaDeJoystick2 [1];
       Serial.print( Posiciones [Contador] [0]);
       Serial.print("          ");
-      Serial.println( Posiciones [Contador] [1]);
+      Serial.print( Posiciones [Contador] [1]);
+      Serial.print("          ");
+      Serial.print(Posiciones2 [Contador] [0]);
+      Serial.print("          ");
+      Serial.println(Posiciones2 [Contador] [1]);
       delay(300);
       Contador++;
   }
@@ -31,7 +37,11 @@ void Mostrar (){
     for(int i = 0; i<Contador; i++){
       Serial.print( Posiciones [i] [0]);
       Serial.print("          ");
-      Serial.println( Posiciones [i] [1]);
+      Serial.print( Posiciones [i] [1]);
+      Serial.print("          ");
+      Serial.print( Posiciones2 [i] [0]);
+      Serial.print("          ");
+      Serial.println( Posiciones2 [i] [1]);
     }
   }
 }
@@ -47,10 +57,12 @@ void LecturaDeEEPROM2(){
     LecturaDeEEPROM();
   }
 }
-void LeerJoystick(){
+void LeerJoysticks(){
   LecturaBotones();
   LecturaDeJoystick [0] = analogRead(Joystick [0]);
   LecturaDeJoystick [1] = analogRead(Joystick [1]);
+  LecturaDeJoystick2 [0] = analogRead(Joystick2 [0]);
+  LecturaDeJoystick2 [1] = analogRead(Joystick2 [1]);
   /*Serial.print(LecturaDeJoystick [0]);
   Serial.print("    ");
   Serial.print(LecturaDeJoystick [1]);
@@ -70,17 +82,30 @@ void GuardarEnEEPROM(){
   Serial.println("Guardando en EEPROM");
   ObjetoPosiciones MiObjeto;
   MiObjeto.contadorDeDatos = Contador;
+  Serial.println("Joystick1");
   for(int Filas = 0; Filas < Contador; Filas++){
     for(int Columnas = 0; Columnas < 2; Columnas++){
       MiObjeto.MatrizPosiciones [Filas][Columnas] =  Posiciones [Filas] [Columnas];
       Serial.print(MiObjeto.MatrizPosiciones [Filas][Columnas]);
       Serial.print("  ");
     }
-    Serial.println();
+    Serial.println("    ");
   }
-
+  Serial.println("Joystick2");
+  ObjetoPosiciones MiObjeto2;
+  MiObjeto2.contadorDeDatos = Contador;
+  for(int Filas = 0; Filas < Contador; Filas++){
+    for(int Columnas = 0; Columnas < 2; Columnas++){
+      MiObjeto2.MatrizPosiciones2 [Filas][Columnas] =  Posiciones2 [Filas] [Columnas];
+      Serial.print(MiObjeto2.MatrizPosiciones2 [Filas][Columnas]);
+      Serial.print("  ");
+    }
   EEPROM.put(0,MiObjeto);
+  EEPROM.put(sizeof(MiObjeto)+1,MiObjeto2);
+  //Se pone "sizeof" para saber el tamaño que tiene el objeto
   Serial.println(sizeof(MiObjeto));
+  //Serial.println();
+ }
 }
 void LecturaDeEEPROM(){
   Serial.println("Obteniendo datos");
