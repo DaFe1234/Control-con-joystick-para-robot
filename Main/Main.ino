@@ -4,8 +4,8 @@
 //                            *
 // ****************************
 // Para Base driver eje X STEP 5 y DIR 2 / Para Codo driver eje z STEP 7 y DIR 4 / Para Hombro eje y STEP 6 y DIR 3
-#include <EEPROM.h>
 #include <Arduino.h>
+#include <EEPROM.h>
 #include "BasicStepperDriver.h"
 
 // Motor steps per revolution. Most steppers are 200 steps or 1.8 degrees/step
@@ -40,28 +40,31 @@ BasicStepperDriver stepper_z(MOTOR_STEPS, DIR_z, STEP_z);
 // ****************************
 
 int Joystick [2] = {A0,A1};
-int LecturaDeJoystick [2];
-int Joystick2 [2] = {A7,A6};
-int LecturaDeJoystick2 [2];
-int BotonGuardar = 11;
-int LecturaBotonGuardar = 0;
-int BotonMostrar = 10;
-int LecturaBotonMostrar = 0;
-int Posiciones [5] [2];
-int Contador = 0;
-int LecturaBotonReiniciar = 0;
-int BotonReiniciar = 12;
-int LecturaBotonGuardarEEPROM = 0;
+
 int BotonGuardarEEPROM = 9;
+int BotonMostrar = 10;
+int BotonGuardar = 11;
+int BotonReiniciar = 12;
+int BotonLeerEEPROM = 13;
+
+int LecturaDeJoystick [2];
+int LecturaBotonGuardarEEPROM = 0;
+int LecturaBotonMostrar = 0;
+int LecturaBotonGuardar = 0;
+int LecturaBotonReiniciar = 0;
+int LecturaBotonLeerEEPROM = 0;
+
+
+int Contador = 0;
+int Posiciones [150] [2];
+
 struct ObjetoPosiciones{
   
   int contadorDeDatos = 0;
   int MatrizPosiciones [5] [2];
   
 };
-//Aqui voy a obtener mis posiciones de inicio
-int LecturaBotonLeerEEPROM = 0;
-int BotonLeerEEPROM = 13;
+
 void setup() {
   // put your setup code here, to run once:
     stepper_x.begin(RPM, MICROSTEPS);
@@ -69,36 +72,32 @@ void setup() {
     stepper_z.begin(RPM, MICROSTEPS);
 
     Serial.begin(9600);
-    pinMode(BotonGuardar,INPUT);
-    pinMode(BotonMostrar,INPUT_PULLUP);
-    pinMode(BotonReiniciar,INPUT_PULLUP);
     pinMode(BotonGuardarEEPROM, INPUT);
-    pinMode(BotonLeerEEPROM,INPUT);
-   Serial.println("Sus posiciones son");
+    pinMode(BotonLeerEEPROM,  INPUT);
+    pinMode(BotonGuardar,     INPUT);
+    pinMode(BotonMostrar,   INPUT_PULLUP);
+    pinMode(BotonReiniciar, INPUT_PULLUP);
+    Serial.println("Sus posiciones son");
     LecturaDeEEPROM();
+    
 }
+
 void loop() {
   // put your main code here, to run repeatedly:
- // Motores
- /* ActivarMotores(1);
-  MoverMotores(-100,3);
-  delay(300);
-  MoverMotores(100,3);
+ /* Motores
+  ActivarMotores(1);
+  MoverMotores(-100,2);
+  delay(500);
+  MoverMotores(100,2);
   ActivarMotores(0);
-  delay (10000);*/
+  delay (10000);
+  */
  // Joystick
     LeerJoystick();
-    delay(50);
+    //delay(300);
     Mostrar();
     Reiniciar();
     Guardar();
-    
-  if(LecturaBotonGuardarEEPROM == 1){
-    delay(300);
-    GuardarEnEEPROM();
-  }
-  if(LecturaBotonLeerEEPROM == 1){
-    delay(300);
-    LecturaDeEEPROM();
-  }
+    GuadarEnEEPROM2();
+    LecturaDeEEPROM2();
 }

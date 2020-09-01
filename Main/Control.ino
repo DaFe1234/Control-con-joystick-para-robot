@@ -26,7 +26,7 @@ void Mostrar (){
     for(int i = 0; i<10; i++){
       Serial.print(".");
       delay(100);
-  }
+     }
           Serial.println();
     for(int i = 0; i<Contador; i++){
       Serial.print( Posiciones [i] [0]);
@@ -35,15 +35,25 @@ void Mostrar (){
     }
   }
 }
+void GuadarEnEEPROM2(){
+    if(LecturaBotonGuardarEEPROM == 1){
+    delay(300);
+    GuardarEnEEPROM();
+  }
+}
+void LecturaDeEEPROM2(){
+  if(LecturaBotonLeerEEPROM == 1){
+    delay(300);
+    LecturaDeEEPROM();
+  }
+}
 void LeerJoystick(){
   LecturaBotones();
   LecturaDeJoystick [0] = analogRead(Joystick [0]);
   LecturaDeJoystick [1] = analogRead(Joystick [1]);
-  LecturaDeJoystick2 [0] = analogRead(Joystick2 [0]);
-  LecturaDeJoystick2 [1] = analogRead(Joystick2 [1]);
-  /*Serial.print(LecturaDeJoystick2 [0]);
+  /*Serial.print(LecturaDeJoystick [0]);
   Serial.print("    ");
-  Serial.print(LecturaDeJoystick2 [1]);
+  Serial.print(LecturaDeJoystick [1]);
   Serial.print("    ");
   Serial.print(LecturaBotonGuardar);
   Serial.println();*/
@@ -54,6 +64,7 @@ void LecturaBotones(){
   LecturaBotonReiniciar = digitalRead(BotonReiniciar);
   LecturaBotonGuardarEEPROM = digitalRead(BotonGuardarEEPROM);
   LecturaBotonLeerEEPROM = digitalRead(BotonLeerEEPROM);
+  
 }
 void GuardarEnEEPROM(){
   Serial.println("Guardando en EEPROM");
