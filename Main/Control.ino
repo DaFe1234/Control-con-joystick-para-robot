@@ -69,6 +69,12 @@ void LeerJoysticks(){
   Serial.print("    ");
   Serial.print(LecturaBotonGuardar);
   Serial.println();*/
+  
+  LecturaDeJoystick [0] = map (LecturaDeJoystick [0], 0 , 1023 , -100 , 100);
+  LecturaDeJoystick [1] = map (LecturaDeJoystick [1],  0 , 1023 , -100 , 100);
+  LecturaDeJoystick2 [0] = map (LecturaDeJoystick2 [0],  0 , 1023 , -100 , 100);
+  LecturaDeJoystick2 [1] = map (LecturaDeJoystick2 [1],  0 , 1023 , -100 , 100);
+
 }
 void LecturaBotones(){
   LecturaBotonMostrar = digitalRead(BotonMostrar);
@@ -102,13 +108,15 @@ void GuardarEnEEPROM(){
     }
   EEPROM.put(0,MiObjeto);
   EEPROM.put(sizeof(MiObjeto)+1,MiObjeto2);
+  Serial.println();
   //Se pone "sizeof" para saber el tamaño que tiene el objeto
-  Serial.println(sizeof(MiObjeto));
-  //Serial.println();
  }
-}
+  Serial.print("Tamaño final del objeto = ");
+   Serial.println(sizeof(MiObjeto));
+  }
 void LecturaDeEEPROM(){
   Serial.println("Obteniendo datos");
+  Serial.println("lectura del joystick 1");
   ObjetoPosiciones MiObjetoResultado;
   EEPROM.get(0, MiObjetoResultado);
   Serial.println(MiObjetoResultado.contadorDeDatos);
@@ -119,5 +127,15 @@ void LecturaDeEEPROM(){
     }
     Serial.println();
   }
-  delay(3000);
+  Serial.println("lectura del joystick 2");
+   ObjetoPosiciones MiObjetoResultado2;
+   EEPROM.get(sizeof(ObjetoPosiciones)+1, MiObjetoResultado2);
+   Serial.println(MiObjetoResultado2.contadorDeDatos);
+   for(int Filas = 0; Filas < MiObjetoResultado2.contadorDeDatos; Filas++){
+     for(int Columnas = 0; Columnas < 2; Columnas++){
+       Serial.print(MiObjetoResultado2.MatrizPosiciones2 [Filas][Columnas]);
+       Serial.print("  ");
+      }
+    Serial.println();
+   }
 }

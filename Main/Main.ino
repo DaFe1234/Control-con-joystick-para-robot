@@ -88,20 +88,21 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
- /* Motores
-  ActivarMotores(1);
-  MoverMotores(-100,2);
-  delay(500);
-  MoverMotores(100,2);
-  ActivarMotores(0);
-  delay (10000);
-  */
  // Joystick
     LeerJoysticks();
+        //Serial.println(LecturaDeJoystick2 [1]);
     //delay(300);
     Mostrar();
     Reiniciar();
     Guardar();
     GuadarEnEEPROM2();
     LecturaDeEEPROM2();
+  // Motores
+  //ActivarMotores(1);
+  //MoverMotores(-25,1);
+  //delay(500);
+  //MoverMotores(25,1);
+  //delay(500);
+  //ActivarMotores(0);
+  //delay (5000);
 }
