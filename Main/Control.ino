@@ -82,6 +82,8 @@ void LecturaBotones(){
   LecturaBotonReiniciar = digitalRead(BotonReiniciar);
   LecturaBotonGuardarEEPROM = digitalRead(BotonGuardarEEPROM);
   LecturaBotonLeerEEPROM = digitalRead(BotonLeerEEPROM);
+  LecturaDeBotonPosiciones = digitalRead(BotonPosiciones);
+  LecturaDeInfrarojoPosiciones = digitalRead(InfrarojoPosiciones);
   
 }
 void GuardarEnEEPROM(){
