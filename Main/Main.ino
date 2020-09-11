@@ -43,6 +43,7 @@ BasicStepperDriver stepper_z(MOTOR_STEPS, DIR_z, STEP_z);
 int Joystick [2] = {A0,A1};
 int Joystick2 [2] = {A6,A7};
 
+boolean Flag = 1;
 int BotonPosiciones = A2;
 int InfrarojoPosiciones = A3;
 int BotonGuardarEEPROM = 9;
@@ -84,11 +85,14 @@ void setup() {
     pinMode(BotonGuardarEEPROM, INPUT);
     pinMode(BotonLeerEEPROM,  INPUT);
     pinMode(BotonGuardar,     INPUT);
+    pinMode(InfrarojoPosiciones, INPUT);
     pinMode(BotonMostrar,   INPUT_PULLUP);
     pinMode(BotonReiniciar, INPUT_PULLUP);
+    pinMode(BotonPosiciones, INPUT_PULLUP);
     Serial.println("Sus posiciones son");
     LecturaDeEEPROM();
-    
+
+
 }
 
 void loop() {
@@ -103,7 +107,5 @@ void loop() {
     GuadarEnEEPROM2();
     LecturaDeEEPROM2();
   // Motores
-  ActivarMotores(1);
-  MoverMotores(LecturaDeJoystick2 [0],1);
-
+    Home();
 }

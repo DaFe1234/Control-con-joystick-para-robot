@@ -141,3 +141,14 @@ void LecturaDeEEPROM(){
     Serial.println();
    }
 }
+void Home (){
+  while(Flag == 1){
+    LecturaBotones();
+    MoverMotores(1,1);
+      if (LecturaDeBotonPosiciones == 0){   
+          ActivarMotores(0);
+          Flag = 0;
+          Serial.println(LecturaDeBotonPosiciones);
+     }
+  }
+}
