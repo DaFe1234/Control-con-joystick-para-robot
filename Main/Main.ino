@@ -44,6 +44,7 @@ int Joystick [2] = {A0,A1};
 int Joystick2 [2] = {A6,A7};
 
 boolean Flag = 1;
+boolean Flag2 = 0;
 int BotonPosiciones = A2;
 int InfrarojoPosiciones = A3;
 int BotonGuardarEEPROM = 9;
@@ -77,9 +78,9 @@ struct ObjetoPosiciones{
 
 void setup() {
   // put your setup code here, to run once:
-    stepper_x.begin(RPM, MICROSTEPS);
-    stepper_y.begin(RPM, MICROSTEPS);
-    stepper_z.begin(RPM, MICROSTEPS);
+    stepper_x.begin(55, MICROSTEPS);
+    stepper_y.begin(55, MICROSTEPS);
+    stepper_z.begin(55, MICROSTEPS);
 
     Serial.begin(9600);
     pinMode(BotonGuardarEEPROM, INPUT);
@@ -107,5 +108,8 @@ void loop() {
     GuadarEnEEPROM2();
     LecturaDeEEPROM2();
   // Motores
-    Home();
+ Coindicion();
+    //Home();
+    //Home2();
+
 }

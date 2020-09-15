@@ -70,10 +70,10 @@ void LeerJoysticks(){
   Serial.print(LecturaBotonGuardar);
   Serial.println();*/
   
-  LecturaDeJoystick [0] = map (LecturaDeJoystick [0], 0 , 1023 , -100 , 100);
-  LecturaDeJoystick [1] = map (LecturaDeJoystick [1],  0 , 1023 , -100 , 100);
-  LecturaDeJoystick2 [0] = map (LecturaDeJoystick2 [0],  0 , 1023 , -100 , 100);
-  LecturaDeJoystick2 [1] = map (LecturaDeJoystick2 [1],  0 , 1023 , -100 , 100);
+  LecturaDeJoystick [0] = map (LecturaDeJoystick [0], 0 , 1023 , 6 , -6);
+  LecturaDeJoystick [1] = map (LecturaDeJoystick [1],  0 , 1023 , -6 , 6);
+  LecturaDeJoystick2 [0] = map (LecturaDeJoystick2 [0],  0 , 1023 , -6 , 6);
+  LecturaDeJoystick2 [1] = map (LecturaDeJoystick2 [1],  0 , 1023 , -6 , 6);
 
 }
 void LecturaBotones(){
@@ -148,7 +148,30 @@ void Home (){
       if (LecturaDeBotonPosiciones == 0){   
           ActivarMotores(0);
           Flag = 0;
-          Serial.println(LecturaDeBotonPosiciones);
+          Flag2 = 1;
+          Serial.println(Flag2);
      }
   }
+}
+void Home2 (){
+  while(Flag2 == 1){
+    LecturaBotones();
+    MoverMotores(1,2);
+      if (LecturaDeInfrarojoPosiciones == 0){   
+          ActivarMotores(0);
+          Flag2 = 0;
+          Serial.println(LecturaDeInfrarojoPosiciones);
+     }
+  }
+}
+void Coindicion () {
+     if(LecturaDeJoystick2 [1] != -1){
+    stepper_x.rotate(LecturaDeJoystick2 [1]);
+    }
+    if(LecturaDeJoystick [1] != -1){
+    stepper_y.rotate(LecturaDeJoystick [1]);
+    }
+    if(LecturaDeJoystick [0] != -1){
+    stepper_z.rotate(LecturaDeJoystick [0]);
+    }
 }
