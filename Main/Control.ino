@@ -167,11 +167,17 @@ void Home2 (){
 void Coindicion () {
      if(LecturaDeJoystick2 [1] != -1){
     stepper_x.rotate(LecturaDeJoystick2 [1]);
+    }else{
+      ActivarMotores (0);
     }
     if(LecturaDeJoystick [1] != -1){
     stepper_y.rotate(LecturaDeJoystick [1]);
+    }else{
+      ActivarMotores (0);
     }
     if(LecturaDeJoystick [0] != -1){
     stepper_z.rotate(LecturaDeJoystick [0]);
+    }else{
+      ActivarMotores (0);
     }
 }
