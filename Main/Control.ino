@@ -143,7 +143,8 @@ void LecturaDeEEPROM(){
 }
 void Home (){
   while(Flag == 1){
-    LecturaBotones();
+    LecturaBotones();   
+    ActivarMotores(1);
     MoverMotores(1,1);
       if (LecturaDeBotonPosiciones == 0){   
           ActivarMotores(0);
@@ -154,24 +155,33 @@ void Home (){
   }
 }
 void Home2 (){
-  while(Flag2 == 1){
+  while(Flag2 == 0){
     LecturaBotones();
-    MoverMotores(1,2);
+    MoverMotores(1,3);
       if (LecturaDeInfrarojoPosiciones == 0){   
           ActivarMotores(0);
-          Flag2 = 0;
+          Flag2 = 1;
           Serial.println(LecturaDeInfrarojoPosiciones);
      }
   }
 }
 void Coindicion () {
      if(LecturaDeJoystick2 [1] != -1){
+      ActivarMotores(1);
     stepper_x.rotate(LecturaDeJoystick2 [1]);
+    }else{
+      ActivarMotores(0);
     }
     if(LecturaDeJoystick [1] != -1){
+      ActivarMotores(1);
     stepper_y.rotate(LecturaDeJoystick [1]);
+    }else{
+      ActivarMotores(0);
     }
-    if(LecturaDeJoystick [0] != -1){
+    if(LecturaDeJoystick [0] != 1){
+      ActivarMotores(1);
     stepper_z.rotate(LecturaDeJoystick [0]);
+    }else{
+      ActivarMotores(0);
     }
 }

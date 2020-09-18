@@ -52,6 +52,7 @@ int BotonMostrar = 10;
 int BotonGuardar = 11;
 int BotonReiniciar = 12;
 int BotonLeerEEPROM = 13;
+char Dato = 0;
 
 int LecturaDeBotonPosiciones = 0;
 int LecturaDeInfrarojoPosiciones = 0;
@@ -82,7 +83,7 @@ void setup() {
     stepper_y.begin(55, MICROSTEPS);
     stepper_z.begin(55, MICROSTEPS);
 
-    Serial.begin(9600);
+    Serial.begin(115200);
     pinMode(BotonGuardarEEPROM, INPUT);
     pinMode(BotonLeerEEPROM,  INPUT);
     pinMode(BotonGuardar,     INPUT);
@@ -97,19 +98,34 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
- // Joystick
     LeerJoysticks();
-        //Serial.println(LecturaDeJoystick2 [1]);
-    //delay(300);
     Mostrar();
     Reiniciar();
     Guardar();
     GuadarEnEEPROM2();
     LecturaDeEEPROM2();
-  // Motores
- Coindicion();
-    //Home();
-    //Home2();
+  //Reviso si hay algun dato en el serial
+  if(Serial.available() > 0){
+    Dato = Serial.read();
+    Serial.println(Dato);
+  }
+  switch(Dato){
+    case 'h':
+      Home();
+      break;
+      
+    case 'i':
+      Home2();
+      break;
+
+    case 'c':
+      Coindicion();
+      break;
+
+    case 'o':
+      ActivarMotores(0);
+      break;
+  }
+ 
 
 }
