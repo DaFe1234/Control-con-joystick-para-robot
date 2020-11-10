@@ -3,6 +3,7 @@ void MoverMotores(int Grados, int Selector){
       if(Selector == 1){
        Grados =  map (Grados, -100 , 100 , -180*16 , 180*16);
        stepper_x.rotate(Grados);
+
       }
       if(Selector == 2){
        Grados =  map (Grados, -100 , 100 , -90*10 , 90*10);
